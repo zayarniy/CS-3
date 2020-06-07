@@ -1,0 +1,87 @@
+﻿<Window x:Name="wndMain" x:Class="LearningNewWords.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LearningNewWords"
+        mc:Ignorable="d"
+        Title="New words learning helper" Height="618.667" Width="796" Icon="address-book.ico" Loaded="wndMain_Loaded">
+    <Window.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}"/>
+        <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxStyle}"/>
+    </Window.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem Header="Слова">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Height="25">
+                        <ComboBox x:Name="cbEncounter" Text="Encounter " IsEditable="True" IsReadOnly="False">
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1">
+                        <Label Content="English word"/>
+                        <TextBox x:Name="tbEnglishWord" Text="Hello" Height="60"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2">
+                        <Label Content="Russian word"/>
+                        <TextBox x:Name="tbRussianWord" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Height="58"/>
+                    </StackPanel>
+                    <WrapPanel Grid.Row="3" Height="35" VerticalAlignment="Top">
+                        <Button x:Name="btnSpeakEnglish" Content="Speak" Margin="5" Click="btnSpeakEnglish_Click"/>
+                        <Button x:Name="btnTranslateToRussian" Content="to Russian" Margin="5" Click="btnTranslateToRussian_Click"/>
+                        <Button x:Name="btnTranslateToEnglish" Content="to English" Margin="5" Click="btnTranslateToEnglish_Click"/>
+                        <Button x:Name="btnEnglishFromClipboard" Content="Eng from Clip" Margin="5" Click="btnEnglishFromClipboard_Click"/>
+                        <Button x:Name="btnRussianFromClipboard" Content="Rus from Clip" Margin="5" Click="btnEnglishFromClipboard_Click"/>
+                        <Button x:Name="btnCancelSpeak" Content="Cancel speak" Margin="5" Click="btnCancelSpeak_Click"/>
+                        <Button x:Name="btnAdd" Content="Add to Dictionary" Margin="5" Click="btnAdd_Click"/>
+                        <CheckBox x:Name="cbSpeak" Content="Auto speak" IsChecked="True"/>
+                    </WrapPanel>
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="280"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid Name="dgWords" AutoGenerateColumns="False" Grid.Row="0" Grid.ColumnSpan="3" SelectedCellsChanged="dgWords_SelectedCellsChanged" ItemsSource="{Binding List}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Encounter" Width="100" Binding="{Binding Encounter}" />
+                                <DataGridTextColumn  Header="English" Width="150" Binding="{Binding EnglishWord}" />
+                                <DataGridTextColumn Header="Russian" Width="150" Binding="{Binding RussianWord}" />
+                                <DataGridTextColumn Header="Added" Width="150" Binding="{Binding Time}" />
+                                <DataGridTextColumn Header="Complicated" Width="150" Binding="{Binding Complicated}" />
+                                <DataGridCheckBoxColumn Header="Know" Width="50" Binding="{Binding IsKnow}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <WrapPanel Grid.Row="1" Grid.ColumnSpan="3" Height="30" VerticalAlignment="Top">
+                            <Button x:Name="btnWriteList" Content="Write" Margin="5" Click="btnWriteList_Click"/>
+                            <Button x:Name="btnLoadList" Content="Load" Margin="5" Click="btnLoadList_Click"/>
+                            <Button x:Name="btnDelete" Content="Delete" Margin="5" Click="btnDelete_Click"/>
+                            <TextBlock Text="Поиск: " VerticalAlignment="Center"/>
+                            <TextBox x:Name="tbFindWord" Height="23" TextWrapping="Wrap" Text="" Width="120" TextChanged="tbFindWord_TextChanged" LostFocus="tbFindWord_LostFocus"/>
+                        </WrapPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Повторение" GotFocus="TabItem_GotFocus" >
+                <StackPanel>
+                    <ComboBox x:Name="cbThemes" IsEditable="True" IsReadOnly="True" Text="Select theme" ItemsSource="{Binding Path=Themes, UpdateSourceTrigger=Explicit}"/>
+                    <Slider x:Name="slInterval" Value="10" Minimum="1" Maximum="120" IsSnapToTickEnabled="True"/>
+                    <Label Content="{Binding ElementName=slInterval, Path=Value}"/>
+                    <Button x:Name="btStart" Content="Start/Finish" Click="btStart_Click"/>
+                    <TextBlock x:Name="tbWord" Text="Hello" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="tbTranslate" Text="Привет" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </TabItem>
+            
+        </TabControl>
+    </Grid>
+</Window>
